@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/paramount-logo.png">
-        <Movie msg="Welcome to the best movie database ever"/>
+<!--    <Movie msg="Welcome to the best movie database ever"/>-->
     <h1>Academy Awards for Best Movie </h1>
-    <h2>Number of movies: {{ nbMovies }}</h2>
+    <h2>Number of movies: {{ movies.length }}</h2>
+    <h2>Number of selected movies: {{ nbMovies }}</h2>
     <div>
       <label for="sortMovies">Sort movies by:</label>
       <select id="selected" v-model="selectedGenre">
@@ -12,11 +13,14 @@
     </div>
 
     <div v-for="movie in sortMoviesByGenre" :key="movie.id">
-      <h3>{{ movie.title }}
-      </h3>
-      <p>Rating: {{ movie.rating }}</p>
-      <p>Genres:</p>
-      <li v-for="genre in movie.genres" :key="genre.id">{{ genre }}</li>
+      <Movie
+          :id="movie.id"
+        :titre="movie.title"
+        :genres="movie.genres"
+        :note="movie.rating"
+        :revue="movie.review"
+        :description="movie.description"
+      />
     </div>
 
     <h2>Tu veux ajouter un film ?</h2>
