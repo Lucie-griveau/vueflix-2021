@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/paramount-logo.png">
-    <!--    <Movie msg="Welcome to Your Vue.js App"/>-->
+        <Movie msg="Welcome to the best movie database ever"/>
     <h1>Academy Awards for Best Movie </h1>
     <h2>Number of movies: {{ nbMovies }}</h2>
     <div>
       <label for="sortMovies">Sort movies by:</label>
-      <select id="selected" v-model="selected">
+      <select id="selected" v-model="selectedGenre">
         <option v-for="genreOption in genresOptions" :key="genreOption">{{ genreOption }}</option>
       </select>
     </div>
@@ -59,12 +59,12 @@
 </template>
 
 <script>
-// import Movie  from './components/Movie.vue'
+import Movie  from './components/Movie.vue'
 
 export default {
   name: 'App',
   components: {
-    // Movie
+    Movie
   },
   data() {
     return {
@@ -95,7 +95,7 @@ export default {
           description: "Green Book is a 2018 American biographic film directed by Peter Farrelly, working on the screenplay with Nick Vallelonga and Brian Hayes Currie."
         },
       ],
-      selected: "",
+      selectedGenre: "",
       // [
       //   'Title',
       //   'Genres',
@@ -158,13 +158,13 @@ export default {
   },
   computed: {
     nbMovies() {
-      return this.movies.length
+      return this.sortMoviesByGenre.length
     },
     sortMoviesByGenre() {
-      if (this.selected === "") {
+      if (this.selectedGenre === "") {
         return this.movies
       } else {
-        return this.movies.filter(movie => movie.genres.includes(this.selected))
+        return this.movies.filter(movie => movie.genres.includes(this.selectedGenre))
       }
     },
   },
