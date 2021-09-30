@@ -27,9 +27,9 @@
     <div>
       <MovieCreation
           :films = "movies"
-          :genresOptions = "genresOptions"/>
-<!--          :addMovie = "addMovie"-->
-<!--        />-->
+          :genresOptions = "genresOptions"
+          :addMovie = "addMovie"
+        />
     </div>
     </v-app>
   </div>
@@ -98,19 +98,19 @@ export default {
     }
   },
   methods: {
-    // addMovie: function (dataAdded) {
-    //   dataAdded.id = this.movies.length + 1;
-    //   this.movies.push(
-    //       {
-    //         id: parseInt(dataAdded.id),
-    //         title: dataAdded.title,
-    //         genres: dataAdded.genres,
-    //         rating: parseInt(dataAdded.rating),
-    //         review: dataAdded.review,
-    //         description: dataAdded.description,
-    //       }
-    //   )
-    // },
+    addMovie: function (dataAdded) {
+      dataAdded.id = this.movies.length + 1;
+      this.movies.push(
+          {
+            id: parseInt(dataAdded.id),
+            title: dataAdded.title,
+            genres: dataAdded.genres,
+            rating: parseInt(dataAdded.rating),
+            review: dataAdded.review,
+            description: dataAdded.description,
+          }
+      )
+    },
     getData() {
 
     }

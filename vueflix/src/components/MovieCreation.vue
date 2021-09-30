@@ -39,8 +39,7 @@
       <label for="description">Description</label><br>
       <input id="description" v-model="dataAdded.description" type="text" placeholder="Description"><br><br>
 
-      <button type="submit" @click="addMovie">Add a movie</button>
-<!--      <button type="submit" @click="addMovie(dataAdded)">Add a movie</button>-->
+      <button type="submit" @click="addMovie(dataAdded)">Add a movie</button>
     </form>
   </div>
 </template>
@@ -64,9 +63,9 @@ export default {
             return []
           }
     },
-    // addMovie: {
-    //   type: Function,
-    // }
+    addMovie: {
+      type: Function,
+    }
   },
 
   data() {
@@ -95,19 +94,6 @@ export default {
         this.errors.push('Rating required.');
       }
       e.preventDefault();
-    },
-    addMovie: function () {
-      this.dataAdded.id = this.films.length + 1;
-      this.films.push(
-          {
-            id: this.dataAdded.id,
-            title: this.dataAdded.title,
-            genres: this.dataAdded.genres,
-            rating: this.dataAdded.rating,
-            review: this.dataAdded.review,
-            description: this.dataAdded.description,
-          }
-      )
     },
   }
 }
