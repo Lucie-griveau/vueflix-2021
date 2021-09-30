@@ -15,8 +15,8 @@ export default {
   props: {
     // msg: String,
     id: {
-      type: String,
-      default: ''
+      type: Number,
+      default: 0,
     },
     titre: {
       type: String,

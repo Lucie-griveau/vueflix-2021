@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <v-app>
     <img alt="Vue logo" src="./assets/paramount-logo.png">
 <!--    <Movie msg="Welcome to the best movie database ever"/>-->
     <h1>Academy Awards for Best Movie </h1>
@@ -59,6 +60,7 @@
 
       <button type="submit" @click="addMovie">Add a movie</button>
     </form>
+    </v-app>
   </div>
 </template>
 
