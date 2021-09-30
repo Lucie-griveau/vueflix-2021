@@ -16,61 +16,34 @@
     <div v-for="movie in sortMoviesByGenre" :key="movie.id">
       <Movie
           :id="movie.id"
-        :titre="movie.title"
-        :genres="movie.genres"
-        :note="movie.rating"
-        :revue="movie.review"
-        :description="movie.description"
+          :titre="movie.title"
+          :image="movie.picture"
+          :genres="movie.genres"
+          :note="movie.rating"
+          :revue="movie.review"
+          :description="movie.description"
       />
     </div>
-
-    <h1>Tu veux ajouter un film ?</h1>
-    <form id="app_form" @submit="checkForm" action="" method="post">
-
-      <div class="errors" v-if="errors.length">
-        <p>Please correct the following error(s):</p>
-        <p v-for="error in errors" :key="error">{{ error }}</p>
-      </div>
-
-      <label for="title">Title</label><br>
-      <input id="title" v-model="dataAdded.title" title="title" type="text" placeholder="Title"><br><br>
-
-      <label for="genres">Genres (press Ctrl for multiple selection)</label><br>
-      <!--      <input id="genres" v-model="dataAdded.genres" genres="genres" type="text" placeholder="Title"><br><br>-->
-      <select id="genres" v-model="dataAdded.genres" genres="genres" multiple>
-        <option v-for="genreOption in genresOptions" :key="genreOption">{{ genreOption }}</option>
-        <!--      <select id="genres" v-model="dataAdded.genres" genres="genres">-->
-        <!--        <option v-for="genreOption in genresOptions" :key="genreOption" v-bind:value="{ genreOption }">{{ genreOption }}</option>-->
-        <!--        <option value="biopic">Biopic</option>-->
-        <!--        <option value="comedy">Comedy</option>-->
-        <!--        <option value="drama">Drama</option>-->
-        <!--        <option value="thriller">Thriller</option>-->
-        <!--        <option value="travel">Travel</option>-->
-      </select><br><br>
-
-      <label for="rating">Rating (from 0 to 10)</label><br>
-      <input id="rating" v-model="dataAdded.rating" rating="rating" type="number" min="0" max="10" placeholder="Rating"><br><br>
-
-      <label for="review">Review</label><br>
-      <input id="review" v-model="dataAdded.review" review="rating" type="text" placeholder="Review"><br><br>
-
-      <label for="description">Description</label><br>
-      <input id="description" v-model="dataAdded.description" description="rating" type="text"
-             placeholder="Description"><br><br>
-
-      <button type="submit" @click="addMovie">Add a movie</button>
-    </form>
+    <div>
+      <MovieCreation
+          :films = "movies"
+          :genresOptions = "genresOptions"/>
+<!--          :addMovie = "addMovie"-->
+<!--        />-->
+    </div>
     </v-app>
   </div>
 </template>
 
 <script>
 import Movie  from './components/Movie.vue'
+import MovieCreation from './components/MovieCreation'
 
 export default {
   name: 'App',
   components: {
-    Movie
+    Movie,
+    MovieCreation
   },
   data() {
     return {
@@ -79,6 +52,7 @@ export default {
         {
           id: 1,
           title: "Nomadland",
+          picture: "https://fr.web.img5.acsta.net/pictures/21/04/29/09/49/2883699.jpg",
           genres: ["drama", "travel"],
           rating: 9,
           review: "A poetic character study on the forgotten and downtrodden, Nomadland beautifully captures the restlessness left in the wake of the Great Recession.",
@@ -87,6 +61,7 @@ export default {
         {
           id: 2,
           title: "Parasite",
+          picture: "https://fr.web.img6.acsta.net/pictures/20/02/12/13/58/3992754.jpg",
           genres: ["comedy", "drama", "thriller"],
           rating: 9,
           review: "With an insightful and searing exploration of human behavior, ‘Parasite’ is a masterfully crafted film that is a definite must watch.",
@@ -95,6 +70,7 @@ export default {
         {
           id: 3,
           title: "Green Book",
+          picture: "https://fr.web.img5.acsta.net/pictures/19/02/25/17/06/0818764.jpg",
           genres: ["biopic", "drama"],
           rating: 9,
           review: "Mahershala Ali plays a jazz musician who confronts the racism of his driver, played by Viggo Mortensen, in a warm but tentative real-life story.",
@@ -119,42 +95,22 @@ export default {
         'thriller',
         'western',
       ],
-      dataAdded: {
-        title: "",
-        genres: [],
-        rating: 0,
-        review: "",
-        description: "",
-      }
     }
   },
   methods: {
-    checkForm: function (e) {
-      // if (this.dataAdded.title && this.dataAdded.rating) {
-      //   return true;
-      // }
-      this.errors = [];
-
-      if (!this.dataAdded.title) {
-        this.errors.push('Title required.');
-      }
-      if (!this.dataAdded.rating) {
-        this.errors.push('Rating required.');
-      }
-      e.preventDefault();
-    },
-    addMovie: function () {
-      this.dataAdded.id = this.movies.length + 1;
-      this.movies.push(
-          {
-            title: this.dataAdded.title,
-            genres: this.dataAdded.genres,
-            rating: this.dataAdded.rating,
-            review: this.dataAdded.review,
-            description: this.dataAdded.description,
-          }
-      )
-    },
+    // addMovie: function (dataAdded) {
+    //   dataAdded.id = this.movies.length + 1;
+    //   this.movies.push(
+    //       {
+    //         id: parseInt(dataAdded.id),
+    //         title: dataAdded.title,
+    //         genres: dataAdded.genres,
+    //         rating: parseInt(dataAdded.rating),
+    //         review: dataAdded.review,
+    //         description: dataAdded.description,
+    //       }
+    //   )
+    // },
     getData() {
 
     }
