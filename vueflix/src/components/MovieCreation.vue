@@ -9,10 +9,10 @@
       </div>
 
       <label for="title">Title</label><br>
-      <input id="title" v-model="dataAdded.title" type="text" placeholder="Title"><br><br>
+      <input id="title" v-model="dataAdded.title" type="text"><br><br>
 
       <label for="affiche">Affiche du film</label><br>
-      <input id="affiche" v-model="dataAdded.picture" type="url" placeholder="Affiche du film"><br><br>
+      <input id="affiche" v-model="dataAdded.picture" type="url"><br><br>
 
       <label for="genres">Genres (press Ctrl for multiple selection)</label><br>
       <!--      <input id="genres" v-model="dataAdded.genres" genres="genres" type="text" placeholder="Title"><br><br>-->
@@ -37,18 +37,20 @@
       ></v-rating><br>
 
       <label for="review">Review</label><br>
-      <input id="review" v-model="dataAdded.review" type="text" placeholder="Review"><br><br>
+      <input id="review" v-model="dataAdded.review" type="text"><br><br>
 
       <label for="description">Description</label><br>
-      <input id="description" v-model="dataAdded.description" type="text" placeholder="Description"><br><br>
+      <input id="description" v-model="dataAdded.description" type="text"><br><br>
 
 <!--      <button type="submit" @click="addMovie(dataAdded)">Add a movie</button>-->
-      <button type="submit" @click="submitForm()">Add a movie</button>
+      <v-btn id="submitForm" type="submit" @click="submitForm()">Add a movie</v-btn>
     </form>
   </div>
 </template>
 
 <script>
+import { EventBus } from '../event-bus';
+
 export default {
   name: 'MovieCreation',
   props: {
@@ -102,7 +104,7 @@ export default {
       e.preventDefault();
     },
     submitForm(){
-      return this.$emit("eventSubmitForm", this.dataAdded)
+      EventBus.$emit("eventSubmitForm", this.dataAdded)
     }
   },
   mounted() {
@@ -122,11 +124,13 @@ h1{
   color: aliceblue;
 }
 
-input, select {
+input {
+  background-color: black;
+  text-align: center;
   margin-left: 10px;
 }
 
-button{
+#submitForm{
   color: aliceblue;
   background-color: $primary-color;
   &:hover{

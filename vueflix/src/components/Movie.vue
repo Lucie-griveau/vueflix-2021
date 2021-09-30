@@ -2,9 +2,9 @@
   <div class="movie">
     <!--    <h1>{{ msg }}</h1>-->
     <h3>{{ titre }}
-    </h3>
+    </h3><br>
     <h4>Genres:</h4>
-    <li v-for="genre in genres" :key="genre">{{ genre }}</li><br>
+    <li v-for="genre in genres" :key="genre">{{ genre }}</li><br><br>
     <img :src="image" alt="movie_picture" width="500em"><br>
     <v-rating
         readonly
@@ -69,17 +69,9 @@ h3 {
   margin: 40px 0 0;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
 li {
   display: inline-block;
   margin: 0 10px;
 }
 
-a {
-  color: #42b983;
-}
 </style>

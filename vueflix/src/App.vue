@@ -16,7 +16,7 @@
           :description="movie.description"
       />
     </div>
-
+      <br>
       <h2>Number of movies: {{ movies.length }}</h2>
       <h2>Number of selected movies: {{ nbMovies }}</h2>
       <div>
@@ -25,13 +25,14 @@
           <option v-for="genreOption in genresOptions" :key="genreOption">{{ genreOption }}</option>
         </select>
       </div>
+      <br>
       <div>
         <MovieCreation
             :films = "movies"
             :genresOptions = "genresOptions"
-            :addMovie = "addMovie"
-            @eventSubmitForm="addMovie"
-        />
+            :addMovie = "addMovie"/>
+<!--            @eventSubmitForm="addMovie"-->
+<!--        />-->
       </div>
     </v-app>
   </div>
@@ -40,6 +41,7 @@
 <script>
 import Movie  from './components/Movie.vue'
 import MovieCreation from './components/MovieCreation'
+import { EventBus } from './event-bus';
 
 export default {
   name: 'App',
@@ -47,7 +49,7 @@ export default {
     Movie,
     MovieCreation
   },
-  data() {
+      data() {
     return {
       errors: [],
       movies: [
@@ -100,7 +102,7 @@ export default {
     }
   },
   methods: {
-    addMovie: function (dataAdded) {
+    addMovie (dataAdded) {
       dataAdded.id = this.movies.length + 1;
       this.movies.push(
           {
@@ -114,12 +116,11 @@ export default {
           }
       )
     },
-    getData() {
-
-    }
   },
   mounted() {
-    this.getData()
+    EventBus.$on('eventSubmitForm', function (payLoad){
+      console.log(payLoad);
+    })
   },
   computed: {
     nbMovies() {
@@ -134,6 +135,7 @@ export default {
     },
   },
 }
+
 </script>
 
 <style lang="scss">
