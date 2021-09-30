@@ -1,10 +1,11 @@
 <template>
   <div class="movie">
-          <!--    <h1>{{ msg }}</h1>-->
-      <h3>{{ titre }}
-      </h3>
-    <img v-bind:src="'{{ image }}'" alt="">
-      <li v-for="genre in genres" :key="genre">{{ genre }}</li>
+    <!--    <h1>{{ msg }}</h1>-->
+    <h3>{{ titre }}
+    </h3>
+    <h4>Genres:</h4>
+    <li v-for="genre in genres" :key="genre">{{ genre }}</li><br>
+    <img :src="image" alt="movie_picture" width="500em"><br>
     <v-rating
         readonly
         v-model="note"
@@ -32,7 +33,6 @@ export default {
     },
     image: {
       type: String,
-      default: '',
     },
     genres: {
       type: Array,

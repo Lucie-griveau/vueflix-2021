@@ -9,7 +9,10 @@
       </div>
 
       <label for="title">Title</label><br>
-      <input id="title" v-model="dataAdded.title" title="title" type="text" placeholder="Title"><br><br>
+      <input id="title" v-model="dataAdded.title" type="text" placeholder="Title"><br><br>
+
+      <label for="affiche">Affiche du film</label><br>
+      <input id="affiche" v-model="dataAdded.picture" type="url" placeholder="Affiche du film"><br><br>
 
       <label for="genres">Genres (press Ctrl for multiple selection)</label><br>
       <!--      <input id="genres" v-model="dataAdded.genres" genres="genres" type="text" placeholder="Title"><br><br>-->
@@ -39,7 +42,8 @@
       <label for="description">Description</label><br>
       <input id="description" v-model="dataAdded.description" type="text" placeholder="Description"><br><br>
 
-      <button type="submit" @click="addMovie(dataAdded)">Add a movie</button>
+<!--      <button type="submit" @click="addMovie(dataAdded)">Add a movie</button>-->
+      <button type="submit" @click="submitForm()">Add a movie</button>
     </form>
   </div>
 </template>
@@ -72,7 +76,9 @@ export default {
     return {
       errors: [],
       dataAdded: {
+        id: 0,
         title: "",
+        picture: "",
         genres: [],
         rating: 0,
         review: "",
@@ -81,7 +87,7 @@ export default {
     }
   },
   methods: {
-    checkForm: function (e) {
+    checkForm(e) {
       // if (this.dataAdded.title && this.dataAdded.rating) {
       //   return true;
       // }
@@ -95,10 +101,37 @@ export default {
       }
       e.preventDefault();
     },
+    submitForm(){
+      return this.$emit("eventSubmitForm", this.dataAdded)
+    }
+  },
+  mounted() {
+  },
+  computed: {
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
+$primary-color: #0050B0;
+$darker-color: darken($primary-color, 10%);
+
+h1{
+  background-color: $primary-color;
+  color: aliceblue;
+}
+
+input, select {
+  margin-left: 10px;
+}
+
+button{
+  color: aliceblue;
+  background-color: $primary-color;
+  &:hover{
+    background-color: $darker-color;
+  }
+}
 
 </style>

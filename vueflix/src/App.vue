@@ -1,17 +1,9 @@
 <template>
   <div id="app">
     <v-app>
-    <img alt="Vue logo" src="./assets/paramount-logo.png">
+    <img alt="Vue logo" src="./assets/paramount-logo.png"><br>
 <!--    <Movie msg="Welcome to the best movie database ever"/>-->
     <h1>Academy Awards for Best Movie </h1>
-    <h2>Number of movies: {{ movies.length }}</h2>
-    <h2>Number of selected movies: {{ nbMovies }}</h2>
-    <div>
-      <label for="sortMovies">Sort movies by:</label>
-      <select id="selected" v-model="selectedGenre">
-        <option v-for="genreOption in genresOptions" :key="genreOption">{{ genreOption }}</option>
-      </select>
-    </div>
 
     <div v-for="movie in sortMoviesByGenre" :key="movie.id">
       <Movie
@@ -24,13 +16,23 @@
           :description="movie.description"
       />
     </div>
-    <div>
-      <MovieCreation
-          :films = "movies"
-          :genresOptions = "genresOptions"
-          :addMovie = "addMovie"
+
+      <h2>Number of movies: {{ movies.length }}</h2>
+      <h2>Number of selected movies: {{ nbMovies }}</h2>
+      <div>
+        <label for="sortMovies">Sort movies by:</label>
+        <select id="selected" v-model="selectedGenre">
+          <option v-for="genreOption in genresOptions" :key="genreOption">{{ genreOption }}</option>
+        </select>
+      </div>
+      <div>
+        <MovieCreation
+            :films = "movies"
+            :genresOptions = "genresOptions"
+            :addMovie = "addMovie"
+            @eventSubmitForm="addMovie"
         />
-    </div>
+      </div>
     </v-app>
   </div>
 </template>
@@ -104,6 +106,7 @@ export default {
           {
             id: parseInt(dataAdded.id),
             title: dataAdded.title,
+            picture: dataAdded.picture,
             genres: dataAdded.genres,
             rating: parseInt(dataAdded.rating),
             review: dataAdded.review,
@@ -130,18 +133,10 @@ export default {
       }
     },
   },
-
 }
 </script>
 
 <style lang="scss">
-
-$primary-color: #C7BB00;
-$darker-color: darken($primary-color, 10%);
-
-h1{
-  background-color: $primary-color;
-}
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -152,14 +147,4 @@ h1{
   margin-top: 60px;
 }
 
-input, select {
-  margin-left: 10px;
-}
-
-button{
-  background-color: $primary-color;
-  &:hover{
-    background-color: $darker-color;
-  }
-}
 </style>
