@@ -23,7 +23,7 @@
       />
     </div>
 
-    <h2>Tu veux ajouter un film ?</h2>
+    <h1>Tu veux ajouter un film ?</h1>
     <form id="app_form" @submit="checkForm" action="" method="post">
 
       <div class="errors" v-if="errors.length">
@@ -57,7 +57,7 @@
       <input id="description" v-model="dataAdded.description" description="rating" type="text"
              placeholder="Description"><br><br>
 
-      <input type="submit" @click="addMovie" value="Add a movie">
+      <button type="submit" @click="addMovie">Add a movie</button>
     </form>
   </div>
 </template>
@@ -176,7 +176,15 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+
+$primary-color: #C7BB00;
+$darker-color: darken($primary-color, 10%);
+
+h1{
+  background-color: $primary-color;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -188,5 +196,12 @@ export default {
 
 input, select {
   margin-left: 10px;
+}
+
+button{
+  background-color: $primary-color;
+  &:hover{
+    background-color: $darker-color;
+  }
 }
 </style>

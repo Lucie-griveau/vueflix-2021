@@ -20,14 +20,20 @@ export default {
     },
     titre: {
       type: String,
+      required: true,
       default: '',
     },
     genres: {
       type: Array,
-      default: () => [],
+      required: true,
+      default: // () => []
+        function(){
+        return []
+      },
     },
     note: {
       type: Number,
+      required: true,
       default: 0,
     },
     revue: {
@@ -43,8 +49,12 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="scss"> // On peut maintenant utiliser Sass !
+$primary-color: #0050B0;
+$darker-color: darken($primary-color, 10%);
+
 h3 {
+  color: $primary-color;
   margin: 40px 0 0;
 }
 
