@@ -1,19 +1,26 @@
 <template>
   <div class="movie">
-    <!--    <h1>{{ msg }}</h1>-->
-    <h3>{{ titre }}
+    <h3>{{ movie.title }}
     </h3><br>
+    <h4>Description:</h4>
+    <p>{{ movie.description }}</p><br>
     <h4>Genres:</h4>
-    <li v-for="genre in genres" :key="genre">{{ genre }}</li><br><br>
-    <img :src="image" alt="movie_picture" width="500em"><br>
+    <li v-for="genre in movie.genres" :key="genre">{{ genre }}</li><br><br>
+    <img :src="movie.picture" alt="movie_picture" width="500em"><br>
     <v-rating
         readonly
-        v-model="note"
+        v-model="movie.rating"
         background-color="blue lighten-3"
         color="blue"
         large
         length="10"
     ></v-rating>
+    <br>
+    <h4>Review:</h4>
+    <p>{{ movie.review }}</p><br>
+    <router-link to="/">
+      <v-btn id="returnHome" type="submit">Back</v-btn>
+    </router-link>
   </div>
 </template>
 
@@ -22,40 +29,10 @@ export default {
   name: 'Movie',
   props: {
     // msg: String,
-    id: {
-      type: Number,
-      default: 0,
+    movie: {
+      type: Object,
     },
-    titre: {
-      type: String,
-      required: true,
-      default: '',
-    },
-    image: {
-      type: String,
-    },
-    genres: {
-      type: Array,
-      required: true,
-      default: // () => [] with ES6
-          function () {
-            return []
-          },
-    },
-    note: {
-      type: Number,
-      required: true,
-      default: 0,
-    },
-    revue: {
-      type: String,
-      default: '',
-    },
-    description: {
-      type: String,
-      default: '',
-    },
-  }
+  },
 }
 </script>
 

@@ -1,11 +1,28 @@
 import Vue from 'vue'
-import App from './App.vue'
-import vuetify from '@/plugins/vuetify'
+import VueRouter from 'vue-router'
+import vuetify from './plugins/vuetify'
 
+import App from './App.vue'
+import Home from './components/Home'
+import Movie from './components/Movie'
+import MovieCreation from "./components/MovieCreation";
+
+Vue.use(VueRouter)
 Vue.config.productionTip = false
+
+const routes = [
+    { path: '/', component: Home, name: 'Home' },
+    { path: '/admin', component: MovieCreation, name: 'Admin', props: true },
+    { path: '/movie/:id', component: Movie, name: 'Movie', props: true },
+]
+
+const router = new VueRouter({ //instancier la VueRouter (from 'vue-router')
+    routes // short for `routes: routes`
+})
 
 new Vue({
     render: h => h(App),
+    router,
     vuetify,
 }).$mount('#app')
 

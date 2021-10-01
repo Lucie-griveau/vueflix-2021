@@ -1,7 +1,7 @@
 <template>
   <div class="movie_creation">
     <h1>Tu veux ajouter un film ?</h1>
-    <form id="app_form" @submit="checkForm" action="" method="post">
+    <form id="add_form">
 
       <div class="errors" v-if="errors.length">
         <p>Please correct the following error(s):</p>
@@ -15,16 +15,8 @@
       <input id="affiche" v-model="dataAdded.picture" type="url"><br><br>
 
       <label for="genres">Genres (press Ctrl for multiple selection)</label><br>
-      <!--      <input id="genres" v-model="dataAdded.genres" genres="genres" type="text" placeholder="Title"><br><br>-->
       <select id="genres" v-model="dataAdded.genres" multiple>
         <option v-for="genreOption in genresOptions" :key="genreOption">{{ genreOption }}</option>
-        <!--      <select id="genres" v-model="dataAdded.genres" genres="genres">-->
-        <!--        <option v-for="genreOption in genresOptions" :key="genreOption" v-bind:value="{ genreOption }">{{ genreOption }}</option>-->
-        <!--        <option value="biopic">Biopic</option>-->
-        <!--        <option value="comedy">Comedy</option>-->
-        <!--        <option value="drama">Drama</option>-->
-        <!--        <option value="thriller">Thriller</option>-->
-        <!--        <option value="travel">Travel</option>-->
       </select><br><br>
 
       <label for="rating">Rating (from 0 to 10)</label><br>
@@ -42,9 +34,11 @@
       <label for="description">Description</label><br>
       <input id="description" v-model="dataAdded.description" type="text"><br><br>
 
-<!--      <button type="submit" @click="addMovie(dataAdded)">Add a movie</button>-->
-      <v-btn id="submitForm" type="submit" @click="submitForm()">Add a movie</v-btn>
+      <v-btn id="checkForm" @click="checkForm()">Add a movie</v-btn>
     </form>
+    <router-link to="/">
+      <v-btn id="returnHome" type="submit">Back</v-btn>
+    </router-link>
   </div>
 </template>
 
@@ -55,19 +49,11 @@ export default {
   name: 'MovieCreation',
   props: {
     // msg: String,
-    films: {
-      type: Array,
-      default:
-          function () {
-            return []
-          },
+    movies: {
+      type: Object,
     },
     genresOptions: {
       type: Array,
-      default:
-          function () {
-            return []
-          }
     },
     addMovie: {
       type: Function,
@@ -89,28 +75,29 @@ export default {
     }
   },
   methods: {
-    checkForm(e) {
-      // if (this.dataAdded.title && this.dataAdded.rating) {
-      //   return true;
-      // }
-      this.errors = [];
-
-      if (!this.dataAdded.title) {
-        this.errors.push('Title required.');
+    checkForm() {
+      if (this.dataAdded.title && this.dataAdded.rating) {
+        this.submitForm()
+        console.log(this.dataAdded)
+        alert("The movie has been successfully add")
+      } else {
+        this.errors = []
+        if (!this.dataAdded.title) {
+          this.errors.push('Title required.');
+        }
+        // if (!this.dataAdded.genres) {            // cannot work since it's an array
+        //   this.errors.push('Genre(s) required.');
+        // }
+        if (!this.dataAdded.rating) {
+          this.errors.push('Rating required.');
+        }
       }
-      if (!this.dataAdded.rating) {
-        this.errors.push('Rating required.');
-      }
-      e.preventDefault();
+      // e.preventDefault();
     },
     submitForm(){
       EventBus.$emit("eventSubmitForm", this.dataAdded)
     }
   },
-  mounted() {
-  },
-  computed: {
-  }
 }
 </script>
 
@@ -130,7 +117,7 @@ input {
   margin-left: 10px;
 }
 
-#submitForm{
+#checkForm{
   color: aliceblue;
   background-color: $primary-color;
   &:hover{
