@@ -110,14 +110,17 @@ export default {
       )
     },
   },
+  destroyed() {
+    console.log("détruit")
+  },
   mounted() {
     // console.log(this)
-    // let that = this
-    // EventBus.$on('eventSubmitForm', function (payLoad) {
-    //   that.addMovie(payLoad);
-    // })
-    EventBus.$on('eventSubmitForm', (payLoad) => // arrow function due to the use of this (range of the this)
-        this.addMovie(payLoad))
+    let that = this
+    EventBus.$on('eventSubmitForm', function (payLoad) {
+      that.addMovie(payLoad);
+    })
+    // EventBus.$on('eventSubmitForm', (payLoad) => // arrow function due to the use of this (range of the this)
+    //     this.addMovie(payLoad))
   },
   computed: {
     nbMovies() {

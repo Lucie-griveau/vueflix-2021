@@ -96,6 +96,9 @@ export default {
     },
     submitForm(){
       EventBus.$emit("eventSubmitForm", this.dataAdded)
+    },
+    getResult(){
+
     }
   },
 }
