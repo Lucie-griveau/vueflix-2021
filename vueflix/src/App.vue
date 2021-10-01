@@ -1,21 +1,21 @@
 <template>
   <div id="app">
     <v-app>
-    <img alt="Vue logo" src="./assets/paramount-logo.png"><br>
-<!--    <Movie msg="Welcome to the best movie database ever"/>-->
-    <h1>Academy Awards for Best Movie </h1>
+      <img alt="Vue logo" src="./assets/paramount-logo.png"><br>
+      <!--    <Movie msg="Welcome to the best movie database ever"/>-->
+      <h1>Academy Awards for Best Movie </h1>
 
-    <div v-for="movie in sortMoviesByGenre" :key="movie.id">
-      <Movie
-          :id="movie.id"
-          :titre="movie.title"
-          :image="movie.picture"
-          :genres="movie.genres"
-          :note="movie.rating"
-          :revue="movie.review"
-          :description="movie.description"
-      />
-    </div>
+      <div v-for="movie in sortMoviesByGenre" :key="movie.id">
+        <Movie
+            :id="movie.id"
+            :titre="movie.title"
+            :image="movie.picture"
+            :genres="movie.genres"
+            :note="movie.rating"
+            :revue="movie.review"
+            :description="movie.description"
+        />
+      </div>
       <br>
       <h2>Number of movies: {{ movies.length }}</h2>
       <h2>Number of selected movies: {{ nbMovies }}</h2>
@@ -28,20 +28,20 @@
       <br>
       <div>
         <MovieCreation
-            :films = "movies"
-            :genresOptions = "genresOptions"
-            :addMovie = "addMovie"/>
-<!--            @eventSubmitForm="addMovie"-->
-<!--        />-->
+            :films="movies"
+            :genresOptions="genresOptions"
+            :addMovie="addMovie"/>
+        <!--            @eventSubmitForm="addMovie"-->
+        <!--        />-->
       </div>
     </v-app>
   </div>
 </template>
 
 <script>
-import Movie  from './components/Movie.vue'
+import Movie from './components/Movie.vue'
 import MovieCreation from './components/MovieCreation'
-import { EventBus } from './event-bus';
+import {EventBus} from './event-bus';
 
 export default {
   name: 'App',
@@ -49,7 +49,10 @@ export default {
     Movie,
     MovieCreation
   },
-      data() {
+  // created() {
+  //   EventBus.$on('eventSubmitForm', this.addMovie())
+  // },
+  data() {
     return {
       errors: [],
       movies: [
@@ -102,7 +105,7 @@ export default {
     }
   },
   methods: {
-    addMovie (dataAdded) {
+    addMovie(dataAdded) {
       dataAdded.id = this.movies.length + 1;
       this.movies.push(
           {
@@ -118,9 +121,13 @@ export default {
     },
   },
   mounted() {
-    EventBus.$on('eventSubmitForm', function (payLoad){
-      console.log(payLoad);
-    })
+    // let that = this
+    // EventBus.$on('eventSubmitForm', function (payLoad) {
+    //   that.addMovie(payLoad);
+    // })
+    // console.log(this)
+    EventBus.$on('eventSubmitForm', (payLoad) => // arrow function due to the use of this (range of the this)
+      this.addMovie(payLoad))
   },
   computed: {
     nbMovies() {
