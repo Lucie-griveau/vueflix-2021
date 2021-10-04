@@ -5,7 +5,12 @@
     <div id="addMovieForm">
 
       <label for="title">Title</label><br>
-      <input id="title" v-model="dataAdded.title" type="text"><br><br>
+      <input type="text" name="title" v-model="dataAdded.title" @keypress="getResult">
+      <v-autocomplete
+          v-model="dataAdded"
+          :items="suggestedMovies"
+          item-text="title"
+      ></v-autocomplete>
 
       <label for="affiche">Affiche du film</label><br>
       <input id="affiche" v-model="dataAdded.picture" type="url"><br><br>
@@ -44,6 +49,7 @@
 
 <script>
 import { EventBus } from '../event-bus';
+import axios from 'axios';
 
 export default {
   name: 'MovieCreation',
@@ -71,7 +77,9 @@ export default {
         rating: 0,
         review: "",
         description: "",
-      }
+      },
+      loading: false,
+      suggestedMovies: []
     }
   },
   methods: {
@@ -98,7 +106,24 @@ export default {
       EventBus.$emit('eventSubmitForm', this.dataAdded)
     },
     getResult(){
-
+      this.loading = true
+      this.suggestedMovies = []
+      // const api_key = '80d0dd074cbffeb2db4b0123882c7f44'
+      axios
+          .get('https://api.themoviedb.org/3/search/movie?api_key=80d0dd074cbffeb2db4b0123882c7f44&query=' + this.dataAdded.title)
+          .then(response => {
+            this.suggestedMovies = response.data.data;
+            // console.log(response);
+            // console.log(response.data);
+            // console.log(response.data.results);
+          })
+          .catch(error => {
+            console.log(error)
+            // this.error = error
+          })
+          .finally(() => {
+            this.loading = false
+          })
     }
   },
   // computed: {

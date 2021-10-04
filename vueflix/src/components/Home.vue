@@ -7,9 +7,10 @@
         <option v-for="genreOption in genresOptions" :key="genreOption">{{ genreOption }}</option>
       </select>
 
-    <!--  <select id="selected" v-model="selectedGenre">-->
-    <!--    <option v-for="genreOption in genres" :key="genreOption">{{ genreOption }}</option>-->
-    <!--  </select>-->
+      <select id="selected" v-model="selectedGenre">
+        <option v-for="genreOption in getGenres" :key="genreOption">{{ genreOption }}</option>
+      </select>
+      <v-btn @click="getGenres"></v-btn>
     </div>
     <div id="goToMovie" v-for="movie in sortMoviesByGenre" :key="movie.id">
       <router-link :to="{
@@ -98,8 +99,9 @@ export default {
   },
   methods: {
     getGenres() {
-      for (let genres in this.genres) {
-        console.log(genres);
+      console.log(this.films)
+      for (let i=0; i < this.films.genres; i++) {
+        console.log(i); // 0, 1, 2
         // let genresOptions = []
         // this.genresOptions.push(genres)
       }
