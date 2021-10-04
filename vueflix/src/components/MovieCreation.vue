@@ -1,12 +1,8 @@
 <template>
   <div class="movie_creation">
     <h1>Tu veux ajouter un film ?</h1>
-    <form id="add_form">
 
-      <div class="errors" v-if="errors.length">
-        <p>Please correct the following error(s):</p>
-        <p v-for="error in errors" :key="error">{{ error }}</p>
-      </div>
+    <div id="addMovieForm">
 
       <label for="title">Title</label><br>
       <input id="title" v-model="dataAdded.title" type="text"><br><br>
@@ -34,11 +30,15 @@
       <label for="description">Description</label><br>
       <input id="description" v-model="dataAdded.description" type="text"><br><br>
 
+      <div class="errors" v-if="errors.length">
+        <p>Please correct the following error(s):</p>
+        <p v-for="error in errors" :key="error">{{ error }}</p>
+      </div>
+
+<!--      <v-btn id="checkForm" @click="submitForm()">Add a movie</v-btn>-->
       <v-btn id="checkForm" @click="checkForm()">Add a movie</v-btn>
-    </form>
-    <router-link to="/">
-      <v-btn id="returnHome" type="submit">Back</v-btn>
-    </router-link>
+
+    </div>
   </div>
 </template>
 
@@ -95,12 +95,17 @@ export default {
       // e.preventDefault();
     },
     submitForm(){
-      EventBus.$emit("eventSubmitForm", this.dataAdded)
+      EventBus.$emit('eventSubmitForm', this.dataAdded)
     },
     getResult(){
 
     }
   },
+  // computed: {
+  //   submitForm(){
+  //     return EventBus.$emit('eventSubmitForm', this.dataAdded)
+  //   },
+  // },
 }
 </script>
 

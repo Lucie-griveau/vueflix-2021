@@ -2,30 +2,32 @@
   <div id="app">
     <v-app>
       <div class="nav"> <!--Lien routes composants-->
-<!--        <router-link  :to="{-->
-<!--              name:'Home',-->
-<!--              params:{-->
-<!--                id: movies.id,-->
-<!--                movies: movies,-->
-<!--              }-->
-<!--            }">Home</router-link>-->
-        <router-link to="/">Home</router-link>
+        <!--        <router-link to="/">Home</router-link>-->
+        <router-link :to="{
+              name:'Home',
+              params:{
+                movies:movies,
+              }
+            }">Home
+        </router-link>
         <router-link to="/admin">Admin</router-link>
       </div>
       <img alt="Vue logo" src="./assets/paramount-logo.png"><br>
+
       <router-view></router-view> <!--Affichage du contenu des routes-->
     </v-app>
+
   </div>
 </template>
 
 <script>
-
 import {EventBus} from "./event-bus";
 
 export default {
-  name: 'App',
+  name: "App",
   data() {
     return {
+      errors: [],
       movies: [
         {
           id: 1,
@@ -55,34 +57,9 @@ export default {
           description: "Green Book is a 2018 American biographic film directed by Peter Farrelly, working on the screenplay with Nick Vallelonga and Brian Hayes Currie."
         },
       ],
-      selectedGenre: "",
-      // [
-      //   'Title',
-      //   'Genres',
-      //   'Rating',
-      //   'Review',
-      //   'Description'
-      // ],
-      genresOptions: [
-        // {text: 'Select One', value: null},
-        'action',
-        'biopic',
-        'comedy',
-        'drama',
-        'travel',
-        'thriller',
-        'western',
-      ],
     }
   },
   methods: {
-    getGenres(){
-      for (let genres in this.genres){
-        console.log(genres);
-        // let genresOptions = []
-        // this.genresOptions.push(genres)
-      }
-    },
     addMovie(dataAdded) {
       dataAdded.id = this.movies.length + 1;
       this.movies.push(
@@ -96,24 +73,27 @@ export default {
             description: dataAdded.description,
           }
       )
+      this.$router.push(
+          {
+            name: 'Home',
+            params: {movies: this.movies},
+          }
+      )
     },
   },
-  destroyed() {
-    console.log("détruit")
-  },
+  // destroyed() {
+  //   console.log('détruit')
+  // },
   mounted() {
     // console.log(this)
-    let that = this
-    EventBus.$on('eventSubmitForm', function (payLoad) {
-      that.addMovie(payLoad);
-    })
-    // EventBus.$on('eventSubmitForm', (payLoad) => // arrow function due to the use of this (range of the this)
-    //     this.addMovie(payLoad))
+    // let that = this
+    // EventBus.$on('eventSubmitForm', function (payLoad) {
+    //   that.addMovie(payLoad);
+    // })
+    EventBus.$on('eventSubmitForm', (dataAdded) => // arrow function due to the use of this (range of the this)
+        this.addMovie(dataAdded))
   },
   computed: {
-    nbMovies() {
-      return this.sortMoviesByGenre.length
-    },
     sortMoviesByGenre() {
       if (this.selectedGenre === "") {
         return this.movies
@@ -121,9 +101,13 @@ export default {
         return this.movies.filter(movie => movie.genres.includes(this.selectedGenre))
       }
     },
-  }
+  },
+  watch: {
+    rating: function (newValue, oldValue) {
+      console.log(newValue, oldValue)
+    }
+  },
 }
-
 </script>
 
 <style lang="scss">
@@ -152,6 +136,18 @@ export default {
 .nav a:hover {
   background-color: #0050B0;
   color: #ffffff;
+}
+
+$primary-color: #0050B0;
+$darker-color: darken($primary-color, 10%);
+
+#displayMovie {
+  color: aliceblue;
+  background-color: $primary-color;
+
+  &:hover {
+    background-color: $darker-color;
+  }
 }
 
 </style>
