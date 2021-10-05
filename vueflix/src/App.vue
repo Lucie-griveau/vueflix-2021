@@ -60,19 +60,19 @@ export default {
     }
   },
   methods: {
-    addMovie(dataAdded) {
-      dataAdded.id = this.movies.length + 1;
-      this.movies.push(
-          {
-            id: parseInt(dataAdded.id),
-            title: dataAdded.title,
-            picture: dataAdded.picture,
-            genres: dataAdded.genres,
-            rating: parseInt(dataAdded.rating),
-            review: dataAdded.review,
-            description: dataAdded.description,
-          }
-      )
+    addMovie(newMovie) {
+      newMovie.id = this.movies.length + 1;
+      this.movies.push(newMovie)
+      // this.movies.push(
+      //     {
+      //       id: parseInt(newMovie.id),
+      //       title: newMovie.title,
+      //       picture: newMovie.poster_path,
+      //       genres: newMovie.genre_ids,
+      //       rating: parseInt(newMovie.vote_average),
+      //       review: newMovie.overview,
+      //     }
+      // )
       this.$router.push(
           {
             name: 'Home',
@@ -90,8 +90,8 @@ export default {
     // EventBus.$on('eventSubmitForm', function (payLoad) {
     //   that.addMovie(payLoad);
     // })
-    EventBus.$on('eventSubmitForm', (dataAdded) => // arrow function due to the use of this (range of the this)
-        this.addMovie(dataAdded))
+    EventBus.$on('eventSubmitForm', (newMovie) => // arrow function due to the use of this (range of the this)
+        this.addMovie(newMovie))
   },
   computed: {
     sortMoviesByGenre() {

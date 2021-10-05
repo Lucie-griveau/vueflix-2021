@@ -4,36 +4,33 @@
 
     <div id="addMovieForm">
 
-      <label for="title">Title</label><br>
-      <input type="text" name="title" v-model="dataAdded.title" @keypress="getResult">
+      <label for="titre">Search movie title</label><br>
+      <input type="text" name="title" v-model="newMovie.title" @keyup="getResult">
       <v-autocomplete
-          v-model="dataAdded"
-          :items="suggestedMovies"
+          v-model="newMovie"
+          :items="APIMovies"
           item-text="title"
+          return-object
       ></v-autocomplete>
 
-      <label for="affiche">Affiche du film</label><br>
-      <input id="affiche" v-model="dataAdded.picture" type="url"><br><br>
+      <label for="affiche">Poster</label><br>
+      <input type="text" name="poster_path" v-model="newMovie.poster_path" ><br><br>
 
-      <label for="genres">Genres (press Ctrl for multiple selection)</label><br>
-      <select id="genres" v-model="dataAdded.genres" multiple>
-        <option v-for="genreOption in genresOptions" :key="genreOption">{{ genreOption }}</option>
-      </select><br><br>
+      <label for="genres">Genres</label><br>
+      <select name="genres" v-model="newMovie.genre_ids"></select>
+        <option v-for="genres in newMovie.genre_ids" :key="genres">{{ genres }}</option><br><br>
 
-      <label for="rating">Rating (from 0 to 10)</label><br>
+      <label for="note">Average vote (from 0 to 10)</label><br>
       <v-rating
-          v-model="dataAdded.rating"
+          v-model="newMovie.vote_average"
           background-color="blue lighten-3"
           color="blue"
           length="10"
           large
       ></v-rating><br>
 
-      <label for="review">Review</label><br>
-      <input id="review" v-model="dataAdded.review" type="text"><br><br>
-
-      <label for="description">Description</label><br>
-      <input id="description" v-model="dataAdded.description" type="text"><br><br>
+      <label for="review">Overview</label><br>
+      <input type="text" name="overview" v-model="newMovie.overview" ><br><br>
 
       <div class="errors" v-if="errors.length">
         <p>Please correct the following error(s):</p>
@@ -56,9 +53,6 @@ export default {
   props: {
     // msg: String,
     movies: {
-      type: Object,
-    },
-    genresOptions: {
       type: Array,
     },
     addMovie: {
@@ -69,52 +63,50 @@ export default {
   data() {
     return {
       errors: [],
-      dataAdded: {
-        id: 0,
+      newMovie: {
+        adult: false,
+        genre_ids: [],
+        id: null,
         title: "",
-        picture: "",
-        genres: [],
-        rating: 0,
-        review: "",
-        description: "",
+        poster_path: "",
+        vote_average: null,
+        overview: "",
       },
+      error: null,
       loading: false,
-      suggestedMovies: []
+      APIMovies: [],
     }
   },
   methods: {
     checkForm() {
-      if (this.dataAdded.title && this.dataAdded.rating) {
+      if (this.newMovie.title && this.newMovie.rating) {
         this.submitForm()
-        console.log(this.dataAdded)
+        console.log(this.newMovie)
         alert("The movie has been successfully add")
       } else {
         this.errors = []
-        if (!this.dataAdded.title) {
+        if (!this.newMovie.title) {
           this.errors.push('Title required.');
         }
-        // if (!this.dataAdded.genres) {            // cannot work since it's an array
+        // if (!this.newMovie.genres) {            // cannot work since it's an array
         //   this.errors.push('Genre(s) required.');
         // }
-        if (!this.dataAdded.rating) {
+        if (!this.newMovie.vote_average) {
           this.errors.push('Rating required.');
         }
       }
       // e.preventDefault();
     },
     submitForm(){
-      EventBus.$emit('eventSubmitForm', this.dataAdded)
+      EventBus.$emit('eventSubmitForm', this.newMovie)
     },
     getResult(){
       this.loading = true
-      this.suggestedMovies = []
-      // const api_key = '80d0dd074cbffeb2db4b0123882c7f44'
+      this.APIMovies = []
       axios
-          .get('https://api.themoviedb.org/3/search/movie?api_key=80d0dd074cbffeb2db4b0123882c7f44&query=' + this.dataAdded.title)
+          .get('https://api.themoviedb.org/3/search/movie?api_key=80d0dd074cbffeb2db4b0123882c7f44&query=' + this.newMovie.title)
           .then(response => {
-            this.suggestedMovies = response.data.data;
-            // console.log(response);
-            // console.log(response.data);
+            this.APIMovies = response.data.results;
             // console.log(response.data.results);
           })
           .catch(error => {
@@ -126,9 +118,12 @@ export default {
           })
     }
   },
+  // mounted() {
+  //   this.getResult()
+  // }
   // computed: {
   //   submitForm(){
-  //     return EventBus.$emit('eventSubmitForm', this.dataAdded)
+  //     return EventBus.$emit('eventSubmitForm', this.newMovie)
   //   },
   // },
 }
@@ -145,7 +140,7 @@ h1{
 }
 
 input {
-  background-color: black;
+  //background-color: black;
   text-align: center;
   margin-left: 10px;
 }
