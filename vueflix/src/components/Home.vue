@@ -1,17 +1,15 @@
 <template>
   <div id="home">
     <h1>Academy Awards for Best Movie </h1><br>
+
     <div id="sortingMovies">
       <label for="sortMovies">Sort movies by:</label>
       <select id="selected" v-model="selectedGenre">
-        <option v-for="genreOption in genresOptions" :key="genreOption">{{ genreOption }}</option>
+        <option value="">Select a genre</option>
+        <option v-for="genre in getGenres" :key="genre">{{ genre }}</option>
       </select>
-
-      <select id="selected" v-model="selectedGenre">
-        <option v-for="genreOption in getGenres" :key="genreOption">{{ genreOption }}</option>
-      </select>
-      <v-btn @click="getGenres"></v-btn>
     </div>
+
     <div id="goToMovie" v-for="movie in sortMoviesByGenre" :key="movie.id">
       <router-link :to="{
               name:'Movie',
@@ -27,13 +25,8 @@
     <div id="nbMovies">
       <h2>Number of movies: {{ films.length }}</h2>
       <h2>Number of selected movies: {{ nbMovies }}</h2>
-<!--      <h2>Number of selected movies: {{ sortMovies() }}</h2>-->
-    </div><br>
-    <!--  <h2>Number of selected movies: {{ nbMovies }}</h2>-->
-    <!--  <h2>Number of selected movies: {{ sortMovies() }}</h2>-->
-    <!--  <br>-->
-    <!--  <h2>Number of selected movies: {{ nbMovies }}</h2>-->
-    <!--  <h2>Number of selected movies: {{ sortMovies() }}</h2>-->
+    </div>
+    <br>
   </div>
 </template>
 
@@ -77,44 +70,22 @@ export default {
           description: "Green Book is a 2018 American biographic film directed by Peter Farrelly, working on the screenplay with Nick Vallelonga and Brian Hayes Currie."
         },
       ],
+      genresOptions: [],
       selectedGenre: "",
-      // [
-      //   'Title',
-      //   'Genres',
-      //   'Rating',
-      //   'Review',
-      //   'Description'
-      // ],
-      genresOptions: [
-        // {text: 'Select One', value: null},
-        'action',
-        'biopic',
-        'comedy',
-        'drama',
-        'travel',
-        'thriller',
-        'western',
-      ],
     }
   },
-  methods: {
-    getGenres() {
-      console.log(this.films)
-      for (let i=0; i < this.films.genres; i++) {
-        console.log(i); // 0, 1, 2
-        // let genresOptions = []
-        // this.genresOptions.push(genres)
-      }
-    },
-    // sortMovies() {
-    //   console.log(this.films.length) // value logged everytime the function is called
-    //   return this.sortMoviesByGenre.length
-    // }
-  },
   computed: {
-    nbMovies() {
-      // console.log(this.films.length) // value logged only once
-      return this.sortMoviesByGenre.length    // return value = number of movies in the array after sorting
+    getGenres() {
+      let genresOptions = []
+      this.films.forEach(film => {
+        film.genres.forEach(genre => {
+          if (!genresOptions.includes(genre)) {   // avoid double values to be pushed into genresOptions
+            genresOptions.push(genre)
+          }
+        })
+      })
+      // console.log(genresOptions);
+      return genresOptions                   // return the array with all genres options
     },
     sortMoviesByGenre() {
       if (this.selectedGenre === "") {
@@ -123,6 +94,14 @@ export default {
         return this.films.filter(movie => movie.genres.includes(this.selectedGenre))
       }
     },
+    nbMovies() {
+      return this.sortMoviesByGenre.length
+    },
+  },
+  watch: {
+    sortMoviesByGenre: function () {
+      console.log("The filter has been applied")
+    }
   },
   mounted() {
     // console.log(this.movies)

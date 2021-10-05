@@ -28,24 +28,14 @@
 export default {
   name: 'Movie',
   props: {
-    // msg: String,
     movie: {
       type: Object,
     },
   },
-  // beforeCreate() { console.log('Je ne suis pas encore  créé') },
-  // created() { console.log('Je suis créé !') },
-  // beforeMount() { console.log('Je vais bientôt être monté sur le DOM!') },
-  // mounted() { console.log('Je suis monté sur le DOM!') },
-  // beforeUpdate() { console.log('Je vais bientôt me mettre à jour!') },
-  // updated() { console.log ('Je suis à jour ! ')},
-  // beforeDestroy() { console.log('Je suis sur le point de disparaître du DOM !') },
-  // destroyed() { console.log('Je suis supprimé') }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss"> // On peut maintenant utiliser Sass !
+<style scoped lang="scss">
 $primary-color: #0050B0;
 $darker-color: darken($primary-color, 10%);
 

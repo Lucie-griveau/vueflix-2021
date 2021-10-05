@@ -67,10 +67,10 @@ export default {
       //     {
       //       id: parseInt(newMovie.id),
       //       title: newMovie.title,
-      //       picture: newMovie.poster_path,
-      //       genres: newMovie.genre_ids,
-      //       rating: parseInt(newMovie.vote_average),
-      //       review: newMovie.overview,
+      //       poster_path: newMovie.poster_path,
+      //       genre_ids: newMovie.genre_ids,
+      //       vote_average: parseInt(newMovie.vote_average),
+      //       overview: newMovie.overview,
       //     }
       // )
       this.$router.push(
@@ -81,31 +81,16 @@ export default {
       )
     },
   },
-  // destroyed() {
-  //   console.log('détruit')
-  // },
-  mounted() {
-    // console.log(this)
-    // let that = this
-    // EventBus.$on('eventSubmitForm', function (payLoad) {
-    //   that.addMovie(payLoad);
-    // })
-    EventBus.$on('eventSubmitForm', (newMovie) => // arrow function due to the use of this (range of the this)
-        this.addMovie(newMovie))
-  },
-  computed: {
-    sortMoviesByGenre() {
-      if (this.selectedGenre === "") {
-        return this.movies
-      } else {
-        return this.movies.filter(movie => movie.genres.includes(this.selectedGenre))
+  watch: {
+    movies: function (newValue, oldValue){
+      if(!(newValue === oldValue)){
+        alert('There is a new movie in the database')
       }
     },
   },
-  watch: {
-    rating: function (newValue, oldValue) {
-      console.log(newValue, oldValue)
-    }
+  mounted() {
+    EventBus.$on('eventSubmitForm', (newMovie) => // arrow function due to the use of this (range of the this)
+        this.addMovie(newMovie))
   },
 }
 </script>
