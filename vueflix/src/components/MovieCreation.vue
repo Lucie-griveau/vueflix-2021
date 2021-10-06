@@ -2,22 +2,36 @@
   <div class="movie_creation">
     <h1>Tu veux ajouter un film ?</h1>
 
-    <div id="addMovieForm">
-
-      <label for="searchTitle">Search movie title</label><br>
-      <input type="text" name="title" v-model="newMovie.title" @keyup="getResult">
+    <div id="addMovieForm"><br>
+      <h3>Look down here, you movie might already be in the database!!!</h3>
       <v-autocomplete
+          v-if="APIMovies"
           v-model="newMovie"
           :items="APIMovies"
           item-text="title"
           return-object
       ></v-autocomplete>
 
+      <label for="searchTitle">Title</label><br>
+      <input type="text" name="title" v-model="newMovie.title" @keyup="getResult"><br><br>
+
       <label for="affiche">Poster</label><br>
       <input type="text" name="poster_path" v-model="newMovie.poster_path"><br><br>
 
       <label for="genres">Genres</label><br>
-      <input type="text" name="genre_ids" v-model="newMovie.genre_ids"><br><br>
+      <!--      <div v-for="genres in APIGenres" :key="genres.id">-->
+      <!--        <input type="checkbox" name="genres" v-model="newMovie.genre_ids" :id="genres.id" :value="genres.id">-->
+      <!--        <label for="checkboxGenres">{{ genres.name }}</label>-->
+      <!--      </div>-->
+
+      <select name="genres" v-model="newMovie.genre_ids" multiple>
+        <option
+            v-for="genres in APIGenres"
+            :key="genres.id"
+            :value="genres.id">
+          {{ genres.name }}
+        </option>
+      </select><br><br>
 
       <label for="note">Average vote (from 0 to 10)</label><br>
       <v-rating
@@ -37,8 +51,8 @@
         <p v-for="error in errors" :key="error">{{ error }}</p>
       </div>
 
-            <v-btn id="checkForm" @click="submitForm()">Add a movie</v-btn>
-<!--      <v-btn id="checkForm" @click="checkForm()">Add a movie</v-btn>-->
+      <v-btn id="checkForm" @click="submitForm()">Add a movie</v-btn>
+      <!--      <v-btn id="checkForm" @click="checkForm()">Add a movie</v-btn>-->
 
     </div>
   </div>
@@ -120,7 +134,7 @@ export default {
             })
       }
     },
-    getGenres() {
+    getAPIGenres() {
       this.loading = true
       this.APIGenres = []
       axios
@@ -138,11 +152,14 @@ export default {
           })
     },
   },
+  mounted() {
+    this.getAPIGenres()
+  },
   watch: {
-    errors: function(){
+    errors: function () {
       console.log("There is an error in the form")
     },
-    newMovie: function (){
+    newMovie: function () {
       console.log(this.newMovie)
     }
   }

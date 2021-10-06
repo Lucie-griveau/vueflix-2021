@@ -19,9 +19,18 @@
               }
             }">
         <v-btn id="displayMovie">{{ movie.title }}</v-btn>
+
       </router-link>
+      <!--      <ul v-for="genres in movie.genres" :key="genres.id">-->
+      <!--        <li>{{ genres }}</li>-->
+      <!--      </ul>-->
+      <ul v-for="genres in movie.genres" :key="genres.id">
+        {{ displayAPIGenres(genres).name }}
+      </ul>
       <br>
+
     </div>
+<!--    <button @click="getAPIGenres">Get API Genres</button>-->
     <div id="nbMovies">
       <h2>Number of movies: {{ films.length }}</h2>
       <h2>Number of selected movies: {{ nbMovies }}</h2>
@@ -31,6 +40,8 @@
 </template>
 
 <script>
+
+import axios from "axios";
 
 export default {
   name: "Home",
@@ -46,7 +57,7 @@ export default {
           id: 1,
           title: "Nomadland",
           picture: "https://fr.web.img5.acsta.net/pictures/21/04/29/09/49/2883699.jpg",
-          genres: ["drama", "travel"],
+          genres: [18, 12],
           rating: 9,
           review: "A poetic character study on the forgotten and downtrodden, Nomadland beautifully captures the restlessness left in the wake of the Great Recession.",
           description: "Nomadland is a 2020 American drama film written and directed by Chloé Zhao. It is based on the book by Jessica Bruder pubished in 2017."
@@ -55,7 +66,7 @@ export default {
           id: 2,
           title: "Parasite",
           picture: "https://fr.web.img6.acsta.net/pictures/20/02/12/13/58/3992754.jpg",
-          genres: ["comedy", "drama", "thriller"],
+          genres: [35, 18, 53],
           rating: 9,
           review: "With an insightful and searing exploration of human behavior, ‘Parasite’ is a masterfully crafted film that is a definite must watch.",
           description: "Parasite (Korean: 기생충; RR: Gisaengchoong) is a 2019 South Korean black comedy thriller film directed by Bong Joon-ho, who also co-wrote the screenplay with Han Jin-won."
@@ -64,7 +75,7 @@ export default {
           id: 3,
           title: "Green Book",
           picture: "https://fr.web.img5.acsta.net/pictures/19/02/25/17/06/0818764.jpg",
-          genres: ["biopic", "drama"],
+          genres: [53, 18],
           rating: 9,
           review: "Mahershala Ali plays a jazz musician who confronts the racism of his driver, played by Viggo Mortensen, in a warm but tentative real-life story.",
           description: "Green Book is a 2018 American biographic film directed by Peter Farrelly, working on the screenplay with Nick Vallelonga and Brian Hayes Currie."
@@ -72,7 +83,30 @@ export default {
       ],
       genresOptions: [],
       selectedGenre: "",
+      APIGenres: [],
     }
+  },
+  methods: {
+    getAPIGenres() {
+      this.loading = true
+      this.APIGenres = []
+      axios
+          .get('https://api.themoviedb.org/3/genre/movie/list?api_key=80d0dd074cbffeb2db4b0123882c7f44')
+          .then(response => {
+            this.APIGenres = response.data.genres;
+            // console.log(response.data.genres);      // array of object with id & name of each genre
+          })
+          .catch(error => {
+            console.log(error)
+            // this.error = error
+          })
+          .finally(() => {
+            this.loading = false
+          })
+    },
+    displayAPIGenres(genre){
+      return this.APIGenres.find(elt => elt.id === genre)
+    },
   },
   computed: {
     getGenres() {
@@ -85,7 +119,7 @@ export default {
         })
       })
       // console.log(genresOptions);
-      return genresOptions                   // return the array with all genres options
+      return genresOptions                       // return the array with all genres options
     },
     sortMoviesByGenre() {
       if (this.selectedGenre === "") {
@@ -104,6 +138,7 @@ export default {
     }
   },
   mounted() {
+    this.getAPIGenres()
     // console.log(this.movies)
     if (this.movies !== undefined) {
       this.films = this.movies
