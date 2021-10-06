@@ -160,7 +160,7 @@ export default {
       console.log("There is an error in the form")
     },
     newMovie: function () {
-      console.log(this.newMovie)
+      // console.log(this.newMovie)
     }
   }
 }

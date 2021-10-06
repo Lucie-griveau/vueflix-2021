@@ -6,7 +6,7 @@
       <label for="sortMovies">Sort movies by:</label>
       <select id="selected" v-model="selectedGenre">
         <option value="">Select a genre</option>
-        <option v-for="genre in getGenres" :key="genre">{{ genre }}</option>
+        <option v-for="genre in APIGenres" :key="genre.id" :value="genre.id">{{ genre.name }}</option>
       </select>
     </div>
 
@@ -24,9 +24,9 @@
       <!--      <ul v-for="genres in movie.genres" :key="genres.id">-->
       <!--        <li>{{ genres }}</li>-->
       <!--      </ul>-->
-      <ul v-for="genres in movie.genres" :key="genres.id">
-        {{ displayAPIGenres(genres).name }}
-      </ul>
+      <div v-for="genres in movie.genres" :key="genres.id">
+        <ul v-if="displayAPIGenres(genres)">{{ displayAPIGenres(genres).name }}</ul>
+      </div>
       <br>
 
     </div>
@@ -89,7 +89,7 @@ export default {
   methods: {
     getAPIGenres() {
       this.loading = true
-      this.APIGenres = []
+      // this.APIGenres = []
       axios
           .get('https://api.themoviedb.org/3/genre/movie/list?api_key=80d0dd074cbffeb2db4b0123882c7f44')
           .then(response => {
@@ -109,18 +109,6 @@ export default {
     },
   },
   computed: {
-    getGenres() {
-      let genresOptions = []
-      this.films.forEach(film => {
-        film.genres.forEach(genre => {
-          if (!genresOptions.includes(genre)) {   // avoid double values to be pushed into genresOptions
-            genresOptions.push(genre)
-          }
-        })
-      })
-      // console.log(genresOptions);
-      return genresOptions                       // return the array with all genres options
-    },
     sortMoviesByGenre() {
       if (this.selectedGenre === "") {
         return this.films
@@ -133,9 +121,13 @@ export default {
     },
   },
   watch: {
-    sortMoviesByGenre: function () {
+    sortMoviesByGenre: function (newValue, oldValue){
+      // console.log(newValue, oldValue)
       console.log("The filter has been applied")
-    }
+      if(newValue.length > oldValue.length){
+        console.log('The filter genre has been updated')
+      }
+    },
   },
   mounted() {
     this.getAPIGenres()
