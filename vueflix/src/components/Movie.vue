@@ -5,7 +5,11 @@
     <h4>Description:</h4>
     <p>{{ movie.description }}</p><br>
     <h4>Genres:</h4>
-    <li v-for="genre in movie.genres" :key="genre">{{ genre }}</li><br><br>
+    <div v-for="genres in movie.genres" :key="genres.id">
+      <li v-if="displayAPIGenres(genres)">{{ displayAPIGenres(genres).name }}</li>
+    </div>
+    <br>
+
     <img :src="movie.picture" alt="movie_picture" width="500em"><br>
     <v-rating
         readonly
@@ -30,6 +34,12 @@ export default {
   props: {
     movie: {
       type: Object,
+    },
+    APIGenres: {
+      type: Array,
+    },
+    displayAPIGenres: {
+      type: Function,
     },
   },
 }

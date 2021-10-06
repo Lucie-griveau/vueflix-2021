@@ -84,7 +84,7 @@ export default {
   watch: {
     movies: function (newValue, oldValue){
       if(!(newValue === oldValue)){
-        console.log('There is a new movie in the database')
+        alert('There is a new movie in the database')
       }
     },
   },

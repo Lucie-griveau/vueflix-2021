@@ -16,6 +16,8 @@
               params:{
                 id:movie.id,
                 movie:movie,
+                APIGenres: APIGenres,
+                displayAPIGenres: displayAPIGenres
               }
             }">
         <v-btn id="displayMovie">{{ movie.title }}</v-btn>
@@ -81,9 +83,10 @@ export default {
           description: "Green Book is a 2018 American biographic film directed by Peter Farrelly, working on the screenplay with Nick Vallelonga and Brian Hayes Currie."
         },
       ],
-      genresOptions: [],
       selectedGenre: "",
       APIGenres: [],
+      error: null,
+      loading: false,
     }
   },
   methods: {

@@ -136,12 +136,12 @@ export default {
     },
     getAPIGenres() {
       this.loading = true
-      this.APIGenres = []
+      // this.APIGenres = []
       axios
           .get('https://api.themoviedb.org/3/genre/movie/list?api_key=80d0dd074cbffeb2db4b0123882c7f44')
           .then(response => {
             this.APIGenres = response.data.genres;
-            // console.log(response.data.genres);
+            console.log(response.data.genres);
           })
           .catch(error => {
             console.log(error)
