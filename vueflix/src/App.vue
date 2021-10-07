@@ -1,8 +1,7 @@
 <template>
   <div id="app">
     <v-app>
-      <div class="nav"> <!--Lien routes composants-->
-        <!--        <router-link to="/">Home</router-link>-->
+      <div class="nav">
         <router-link :to="{
               name:'Home',
               params:{
@@ -13,8 +12,7 @@
         <router-link to="/admin">Admin</router-link>
       </div>
       <img alt="Vue logo" src="./assets/paramount-logo.png"><br>
-
-      <router-view></router-view> <!--Affichage du contenu des routes-->
+      <router-view></router-view>
     </v-app>
 
   </div>
@@ -32,7 +30,7 @@ export default {
         {
           id: 1,
           title: "Nomadland",
-          picture: "https://fr.web.img5.acsta.net/pictures/21/04/29/09/49/2883699.jpg",
+          picture: "56tZbah6IfqEPaWEI5Ve1ZGbSQW.jpg",
           genres: [18, 12],
           rating: 9,
           review: "A poetic character study on the forgotten and downtrodden, Nomadland beautifully captures the restlessness left in the wake of the Great Recession.",
@@ -41,7 +39,7 @@ export default {
         {
           id: 2,
           title: "Parasite",
-          picture: "https://fr.web.img6.acsta.net/pictures/20/02/12/13/58/3992754.jpg",
+          picture: "7hLSzZX2jROmEXz2aEoh6JKUFy2.jpg",
           genres: [35, 18, 53],
           rating: 9,
           review: "With an insightful and searing exploration of human behavior, ‘Parasite’ is a masterfully crafted film that is a definite must watch.",
@@ -50,7 +48,7 @@ export default {
         {
           id: 3,
           title: "Green Book",
-          picture: "https://fr.web.img5.acsta.net/pictures/19/02/25/17/06/0818764.jpg",
+          picture: "orN43xQQkoAmbUx1tYZl6HY7WKU.jpg",
           genres: [53, 18],
           rating: 9,
           review: "Mahershala Ali plays a jazz musician who confronts the racism of his driver, played by Viggo Mortensen, in a warm but tentative real-life story.",
@@ -80,6 +78,23 @@ export default {
           }
       )
     },
+    addCollection(newCollection) {
+      // newCollection.id = this.movies.length + 1;
+      // this.movies.push(newCollection)
+      this.collections.push(
+          {
+            id: parseInt(newCollection.id),
+            description: newCollection.description,
+            movies: newCollection.movies,
+          }
+      )
+      this.$router.push(
+          {
+            name: 'Home',
+            params: {collections: this.collections},
+          }
+      )
+    },
   },
   watch: {
     movies: function (newValue, oldValue){
@@ -89,13 +104,18 @@ export default {
     },
   },
   mounted() {
-    EventBus.$on('eventSubmitForm', (newMovie) => // arrow function due to the use of this (range of the this)
+    EventBus.$on('addMovie', (newMovie) => // arrow function due to the use of this (range of the this)
         this.addMovie(newMovie))
+    EventBus.$on('addCollection', (newCollection) => // arrow function due to the use of this (range of the this)
+        this.addCollection(newCollection))
   },
 }
 </script>
 
 <style lang="scss">
+
+$primary-color: #0050B0;
+$darker-color: darken($primary-color, 10%);
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -113,26 +133,14 @@ export default {
 .nav a {
   padding: 10px 20px;
   margin: 0 10px;
-  color: #000000;
+  color: $primary-color;
   border: 2px solid black;
   transition: 1s;
-}
-
-.nav a:hover {
-  background-color: #0050B0;
-  color: #ffffff;
-}
-
-$primary-color: #0050B0;
-$darker-color: darken($primary-color, 10%);
-
-#displayMovie {
-  color: aliceblue;
-  background-color: $primary-color;
-
   &:hover {
     background-color: $darker-color;
+    color: #ffffff;
   }
 }
+
 
 </style>

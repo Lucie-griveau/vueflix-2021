@@ -10,7 +10,12 @@
     </div>
     <br>
 
-    <img :src="movie.picture" alt="movie_picture" width="500em"><br>
+<!--    <div v-for="genre in APIGenres" :key="genre.id" :value="genre.id">-->
+<!--      <li>{{ genre.name }}</li>-->
+<!--    </div>-->
+<!--    <br>-->
+
+    <img :src="'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/'+ movie.picture" alt="movie_picture" width="500em"><br>
     <v-rating
         readonly
         v-model="movie.rating"
@@ -35,9 +40,9 @@ export default {
     movie: {
       type: Object,
     },
-    APIGenres: {
-      type: Array,
-    },
+    // APIGenres: {
+    //   type: Array,
+    // },
     displayAPIGenres: {
       type: Function,
     },

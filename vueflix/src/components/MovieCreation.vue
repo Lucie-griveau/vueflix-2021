@@ -1,6 +1,6 @@
 <template>
   <div class="movie_creation">
-    <h1>Tu veux ajouter un film ?</h1>
+    <h1>Add a movie</h1>
 
     <div id="addMovieForm"><br>
       <h3>Look down here, you movie might already be in the database!!!</h3>
@@ -86,8 +86,8 @@ export default {
         vote_average: null,
         overview: "",
       },
-      error: null,
       loading: false,
+      error: null,
       APIMovies: [],
       APIGenres: [],
     }
@@ -113,7 +113,7 @@ export default {
     //   // e.preventDefault();
     // },
     submitForm() {
-      EventBus.$emit('eventSubmitForm', this.newMovie)
+      EventBus.$emit('addMovie', this.newMovie)
     },
     getResult() {
       if (this.newMovie.title !== "") {
@@ -141,7 +141,7 @@ export default {
           .get('https://api.themoviedb.org/3/genre/movie/list?api_key=80d0dd074cbffeb2db4b0123882c7f44')
           .then(response => {
             this.APIGenres = response.data.genres;
-            console.log(response.data.genres);
+            // console.log(response.data.genres);
           })
           .catch(error => {
             console.log(error)
