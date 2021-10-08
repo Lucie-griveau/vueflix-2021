@@ -1,6 +1,6 @@
 <template>
   <div class="collection">
-<!--    <h3>{{ collection.description }}</h3>-->
+    <!--    <h3>{{ collection.description }}</h3>-->
     <div v-for="movies in collection.movies" :key="movies.id">
       <router-link :to="{
               name:'Movie',
@@ -9,7 +9,7 @@
                 movie:movies,
               }
             }">
-        <v-btn class="movieBtn" id="displayMovie">{{ movies.title }}</v-btn>
+          <v-btn class="movieBtn" id="displayMovie">{{ movies.title }}</v-btn>
       </router-link>
     </div>
     <br>

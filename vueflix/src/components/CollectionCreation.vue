@@ -8,15 +8,20 @@
       <input type="text" name="description" v-model="newCollection.description"><br><br>
 
       <label for="movies">Movies</label><br>
-      <input type="text" name="movies_title" v-model="newCollection.movies" @keyup="getResult"><br><br>
+      <input type="text" name="movies_title" v-model="movie" @keyup="getResult">
       <v-autocomplete
           v-if="APIMovies"
-          v-model="newCollection.movies"
+          v-model="movie"
           :items="APIMovies"
           item-text="title"
           return-object
       ></v-autocomplete>
-
+      <v-btn id="addMovie" @click="addMovieToCollection">Add movie</v-btn>
+      <br><br>
+      <p v-if="newCollection.movies">Here is the list of movies you're adding as a collection</p>
+      <ul v-for="movies in newCollection.movies" :key="movies.id">{{ movies.title }}</ul>
+      <br><br>
+      <p>Ready to add the collection?</p>
       <v-btn id="addCollection" @click="addCollection">Add a collection</v-btn>
     </div>
   </div>
@@ -46,11 +51,11 @@ export default {
     //   EventBus.$emit('addCollection', this.newCollection)
     // },
     getResult() {
-      if (this.newCollection.movies !== "") {
+      if (this.movie !== "") {
         this.loading = true
         this.APIMovies = []
         axios
-            .get('https://api.themoviedb.org/3/search/movie?api_key=80d0dd074cbffeb2db4b0123882c7f44&query=' + this.newCollection.movies)
+            .get('https://api.themoviedb.org/3/search/movie?api_key=80d0dd074cbffeb2db4b0123882c7f44&query=' + this.movie)
             .then(response => {
               this.APIMovies = response.data.results;
               // console.log(response.data.results);
@@ -66,11 +71,11 @@ export default {
     },
     addCollection() {
       axios
-          .post('http://localhost:3000/collections/add',
+          .post('https://apirest-movies-collections.herokuapp.com/collections/add',
               {
                 collection_id: parseInt(this.newCollection.id),
                 description: this.newCollection.description,
-                movies: [this.newCollection.movies]
+                movies: this.newCollection.movies
               })
           .then(response => {
             console.log(response)
@@ -84,12 +89,12 @@ export default {
           })
       this.$router.push(
           {
-            name: 'Collection',
+            name: 'Collections',
             params: {collections: this.newCollection},
           }
       )
     },
-    addMovieToCollection(){
+    addMovieToCollection() {
       this.newCollection.movies.push(this.movie)
     },
   },

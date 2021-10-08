@@ -4,7 +4,7 @@
       <router-link :to="{
               name:'Collection',
               params:{
-                id:collection.id,
+                id:collection.collection_id,
                 collection:collection,
               }
             }">
@@ -42,7 +42,7 @@ export default {
   methods: {
     displayCollection() {
       axios
-          .get('http://localhost:3000/collections')
+          .get('https://apirest-movies-collections.herokuapp.com/collections')
           .then(response => {
             // console.log(response.data)
             this.collections = response.data;
