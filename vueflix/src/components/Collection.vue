@@ -1,47 +1,28 @@
 <template>
   <div class="collection">
-    <h3>{{ collection.description }}
-    </h3><br>
-    <h4>Movies:</h4>
+<!--    <h3>{{ collection.description }}</h3>-->
     <div v-for="movies in collection.movies" :key="movies.id">
-      <li>{{ movies.title }}</li>
+      <router-link :to="{
+              name:'Movie',
+              params:{
+                id:movies.id,
+                movie:movies,
+              }
+            }">
+        <v-btn class="movieBtn" id="displayMovie">{{ movies.title }}</v-btn>
+      </router-link>
     </div>
     <br>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "Collection",
-  data() {
-    return {
-      loading: false,
-      error: null,
-      collection: [],
-    }
-  },
-  methods: {
-    displayCollection() {
-      this.collection = []
-      axios
-        .get('http://localhost:3000/collections')
-        .then(response => {
-          this.collection = response.data;
-          console.log(response.data)
-        })
-        .catch(error => {
-          console.log(error)
-         // this.error = error
-        })
-        .finally(() => {
-          this.loading = false
-        })
-    }
-  },
-  mounted() {
-    this.displayCollection()
+  props: {
+    collection: {
+      type: Object,
+    },
   }
 }
 </script>

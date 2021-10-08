@@ -2,8 +2,8 @@
   <div class="movie">
     <h3>{{ movie.title }}
     </h3><br>
-    <h4>Description:</h4>
-    <p>{{ movie.description }}</p><br>
+    <h4>Overview:</h4>
+    <p>{{ movie.overview }}</p><br>
     <h4>Genres:</h4>
     <div v-for="genres in movie.genres" :key="genres.id">
       <li v-if="displayAPIGenres(genres)">{{ displayAPIGenres(genres).name }}</li>
@@ -15,21 +15,18 @@
 <!--    </div>-->
 <!--    <br>-->
 
-    <img :src="'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/'+ movie.picture" alt="movie_picture" width="500em"><br>
+    <img :src="'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/'+ movie.poster_path" alt="movie_picture" width="500em"><br>
     <v-rating
         readonly
-        v-model="movie.rating"
+        v-model="movie.vote_average"
         background-color="blue lighten-3"
         color="blue"
         large
         length="10"
     ></v-rating>
     <br>
-    <h4>Review:</h4>
-    <p>{{ movie.review }}</p><br>
-    <router-link to="/">
-      <v-btn id="returnHome" type="submit">Back</v-btn>
-    </router-link>
+    <h4>Release date:</h4>
+    <p>{{ movie.release_date }}</p><br>
   </div>
 </template>
 

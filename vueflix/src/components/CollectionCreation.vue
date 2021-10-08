@@ -17,7 +17,7 @@
           return-object
       ></v-autocomplete>
 
-      <v-btn id="checkForm" @click="addCollection()">Add a collection</v-btn>
+      <v-btn id="addCollection" @click="addCollection">Add a collection</v-btn>
     </div>
   </div>
 </template>
@@ -31,14 +31,14 @@ export default {
   data() {
     return {
       newCollection: {
-        id: null,
+        id: 1,
         description: "",
         movies: [],
       },
+      movie: "",
       loading: false,
       error: null,
       APIMovies: [],
-      APICollection: [],
     }
   },
   methods: {
@@ -46,13 +46,34 @@ export default {
     //   EventBus.$emit('addCollection', this.newCollection)
     // },
     getResult() {
-      this.loading = true
-      this.APIMovies = []
+      if (this.newCollection.movies !== "") {
+        this.loading = true
+        this.APIMovies = []
+        axios
+            .get('https://api.themoviedb.org/3/search/movie?api_key=80d0dd074cbffeb2db4b0123882c7f44&query=' + this.newCollection.movies)
+            .then(response => {
+              this.APIMovies = response.data.results;
+              // console.log(response.data.results);
+            })
+            .catch(error => {
+              console.log(error)
+              // this.error = error
+            })
+            .finally(() => {
+              this.loading = false
+            })
+      }
+    },
+    addCollection() {
       axios
-          .get('https://api.themoviedb.org/3/search/movie?api_key=80d0dd074cbffeb2db4b0123882c7f44&query=' + this.newMovie.title)
+          .post('http://localhost:3000/collections/add',
+              {
+                collection_id: parseInt(this.newCollection.id),
+                description: this.newCollection.description,
+                movies: [this.newCollection.movies]
+              })
           .then(response => {
-            this.APIMovies = response.data.results;
-            // console.log(response.data.results);
+            console.log(response)
           })
           .catch(error => {
             console.log(error)
@@ -61,23 +82,22 @@ export default {
           .finally(() => {
             this.loading = false
           })
+      this.$router.push(
+          {
+            name: 'Collection',
+            params: {collections: this.newCollection},
+          }
+      )
     },
-    addCollection() {
-      this.APICollection = [],
-          axios
-              .post('https://apirest-movies-collections.herokuapp.com/collections/add', this.newCollection)
-              .then(response => {
-                console.log(response.data)
-              })
-              .catch(error => {
-                console.log(error)
-                // this.error = error
-              })
-              .finally(() => {
-                this.loading = false
-              })
-    }
+    addMovieToCollection(){
+      this.newCollection.movies.push(this.movie)
+    },
   },
+  watch: {
+    newCollection: function () {
+      console.log(this.newCollection)
+    }
+  }
 }
 </script>
 

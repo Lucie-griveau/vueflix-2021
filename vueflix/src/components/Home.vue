@@ -4,9 +4,9 @@
 
     <div id="gotToCollection">
       <router-link :to="{
-        name: 'Collection'
+        name: 'Collections'
         }">
-        <v-btn class="displayButtons" id="displayCollection">Go to collections</v-btn>
+        <v-btn class="displayButtons" id="displayCollection">Go to my collections</v-btn>
       </router-link>
     </div>
     <br>
@@ -68,29 +68,29 @@ export default {
         {
           id: 1,
           title: "Nomadland",
-          picture: "56tZbah6IfqEPaWEI5Ve1ZGbSQW.jpg",
-          genres: [18, 12],
-          rating: 9,
-          review: "A poetic character study on the forgotten and downtrodden, Nomadland beautifully captures the restlessness left in the wake of the Great Recession.",
-          description: "Nomadland is a 2020 American drama film written and directed by Chloé Zhao. It is based on the book by Jessica Bruder pubished in 2017."
+          poster_path: "/8Vc5EOUEIF1EUXuX9eLFf7BvN3P.jpg",
+          genres: [18],
+          vote_average: 7.3,
+          overview: "A woman in her sixties embarks on a journey through the western United States after losing everything in the Great Recession, living as a van-dwelling modern-day nomad.",
+          release_date: "2021-01-29"
         },
         {
           id: 2,
           title: "Parasite",
-          picture: "7hLSzZX2jROmEXz2aEoh6JKUFy2.jpg",
-          genres: [35, 18, 53],
-          rating: 9,
-          review: "With an insightful and searing exploration of human behavior, ‘Parasite’ is a masterfully crafted film that is a definite must watch.",
-          description: "Parasite (Korean: 기생충; RR: Gisaengchoong) is a 2019 South Korean black comedy thriller film directed by Bong Joon-ho, who also co-wrote the screenplay with Han Jin-won."
+          poster_path: "/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg",
+          genres: [35, 53, 18],
+          vote_average: 8.5,
+          overview: "All unemployed, Ki-taek's family takes peculiar interest in the wealthy and glamorous Parks for their livelihood until they get entangled in an unexpected incident.",
+          release_date: "2019-05-30"
         },
         {
           id: 3,
           title: "Green Book",
-          picture: "orN43xQQkoAmbUx1tYZl6HY7WKU.jpg",
-          genres: [53, 18],
-          rating: 9,
-          review: "Mahershala Ali plays a jazz musician who confronts the racism of his driver, played by Viggo Mortensen, in a warm but tentative real-life story.",
-          description: "Green Book is a 2018 American biographic film directed by Peter Farrelly, working on the screenplay with Nick Vallelonga and Brian Hayes Currie."
+          poster_path: "/7BsvSuDQuoqhWmU2fL7W2GOcZHU.jpg",
+          genres: [18, 35, 10402],
+          vote_average: 8.3,
+          overview: "Tony Lip, a bouncer in 1962, is hired to drive pianist Don Shirley on a tour through the Deep South in the days when African Americans, forced to find alternate accommodations and services due to segregation laws below the Mason-Dixon Line, relied on a guide called The Negro Motorist Green Book.",
+          release_date: "2018-11-16"
         },
       ],
       selectedGenre: "",

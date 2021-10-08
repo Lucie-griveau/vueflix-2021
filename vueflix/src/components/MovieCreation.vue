@@ -46,12 +46,15 @@
       <label for="review">Overview</label><br>
       <input type="text" name="overview" v-model="newMovie.overview"><br><br>
 
+      <label for="release_date">Release date</label><br>
+      <input type="text" name="release_date" v-model="newMovie.release_date"><br><br>
+
       <div class="errors" v-if="errors.length">
         <p>Please correct the following error(s):</p>
         <p v-for="error in errors" :key="error">{{ error }}</p>
       </div>
 
-      <v-btn id="checkForm" @click="submitForm()">Add a movie</v-btn>
+      <v-btn id="addForm" @click="submitForm()">Add a movie</v-btn>
       <!--      <v-btn id="checkForm" @click="checkForm()">Add a movie</v-btn>-->
 
     </div>
@@ -182,7 +185,7 @@ input {
   margin-left: 10px;
 }
 
-#checkForm {
+#addForm {
   color: aliceblue;
   background-color: $primary-color;
 
