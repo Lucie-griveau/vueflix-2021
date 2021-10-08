@@ -26,13 +26,7 @@ export default {
     displayCollection() {
       this.collection = []
       axios
-        .get('https://apirest-movies-collections.herokuapp.com/collections', {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
-            "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token"
-          }
-        })
+        .get('http://localhost:3000/collections')
         .then(response => {
           this.collection = response.data;
           console.log(response.data)
