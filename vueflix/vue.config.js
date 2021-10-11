@@ -1,3 +1,5 @@
 module.exports = {
-  publicPath: '/'
+      publicPath: process.env.NODE_ENV === 'production'
+          ? '/JS_vue-Vueflix-2021'
+          : '/'
 }
