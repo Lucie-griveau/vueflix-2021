@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # abort on errors
-set -e
+#set -e
 
 # build
 npm run build
@@ -22,6 +22,6 @@ git commit -m 'deploy'
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
 # git push -f git@github.com:<USERNAME>/<REPO>.git main:gh-pages
 
-git push -f https://github.com/Lucie-griveau/JS_vue-Vueflix-2021 main:gh-pages
+git push -f https://github.com/Lucie-griveau/vueflix-2021.git master:gh-pages
 
 cd -
