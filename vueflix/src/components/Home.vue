@@ -1,5 +1,7 @@
 <template>
   <div id="home">
+<!--    <img alt="Vue logo" src="../assets/paramount-logo.png"><br>-->
+    <img src="http://chroniclesnews.com/wp-content/uploads/2021/03/movie-poster.png" alt="">
     <h1>Welcome to my movie db!</h1><br>
 
     <div id="gotToCollection">
@@ -30,15 +32,14 @@
                 displayAPIGenres: displayAPIGenres
               }
             }">
-        <v-btn class="displayButtons" id="displayMovie">{{ movie.title }}</v-btn>
-
+        <img :src="'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/'+ movie.poster_path" alt="movie_picture" width="500em"><br>
       </router-link>
       <!--      <ul v-for="genres in movie.genres" :key="genres.id">-->
       <!--        <li>{{ genres }}</li>-->
       <!--      </ul>-->
-      <div v-for="genres in movie.genres" :key="genres.id">
-        <ul v-if="displayAPIGenres(genres)">{{ displayAPIGenres(genres).name }}</ul>
-      </div>
+<!--      <div v-for="genres in movie.genres" :key="genres.id">-->
+<!--        <ul v-if="displayAPIGenres(genres)">{{ displayAPIGenres(genres).name }}</ul>-->
+<!--      </div>-->
       <br>
 
     </div>

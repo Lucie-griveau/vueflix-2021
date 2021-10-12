@@ -9,9 +9,10 @@
               }
             }">Home
         </router-link>
+        <router-link to="/movies">Movies</router-link>
+        <router-link to="/collections">Collection</router-link>
         <router-link to="/admin">Admin</router-link>
       </div>
-      <img alt="Vue logo" src="./assets/paramount-logo.png"><br>
       <router-view></router-view>
     </v-app>
 

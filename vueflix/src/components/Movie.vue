@@ -1,6 +1,6 @@
 <template>
   <div class="movie">
-    <h3>{{ movie.title }}
+    <h3>{{ movie.title | uppercase }}
     </h3><br>
     <h4>Overview:</h4>
     <p>{{ movie.overview }}</p><br>
@@ -43,6 +43,11 @@ export default {
     displayAPIGenres: {
       type: Function,
     },
+  },
+  filters: {
+    uppercase(value) {
+      return value.toUpperCase();
+    }
   },
 }
 </script>
