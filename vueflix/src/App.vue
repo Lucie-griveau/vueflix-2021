@@ -123,10 +123,12 @@ $darker-color: darken($primary-color, 10%);
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  background-color: aliceblue;
 }
 
 .nav {
   margin-bottom: 50px;
+  margin-top: 50px;
 }
 
 .nav a {

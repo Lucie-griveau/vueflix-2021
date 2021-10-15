@@ -14,6 +14,7 @@
 
       <label for="searchTitle">Title</label><br>
       <input type="text" name="title" v-model="newMovie.title" @keyup="getResult"><br><br>
+        <div v-if="erreur" class="error">{{ erreur }}</div>
 
       <label for="affiche">Poster</label><br>
       <input type="text" name="poster_path" v-model="newMovie.poster_path"><br><br>
@@ -155,12 +156,19 @@ export default {
           })
     },
   },
+  computed: {
+    erreur () {
+      return this.newMovie.title.trim().length < 7
+          ? 'Veuillez entrez un nom plus long'
+          : ''
+    }
+  },
   mounted() {
     this.getAPIGenres()
   },
   watch: {
-    errors: function () {
-      console.log("There is an error in the form")
+    error: function (){
+      return this.newMovie.title.trim()
     },
     newMovie: function () {
       // console.log(this.newMovie)

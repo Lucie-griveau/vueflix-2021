@@ -1,7 +1,7 @@
 <template>
   <div id="home">
 <!--    <img alt="Vue logo" src="../assets/paramount-logo.png"><br>-->
-    <img src="http://chroniclesnews.com/wp-content/uploads/2021/03/movie-poster.png" alt="">
+    <img src="http://chroniclesnews.com/wp-content/uploads/2021/03/movie-poster.png" alt="" width="1080">
     <h1>Welcome to my movie db!</h1><br>
 
     <div id="gotToCollection">
@@ -22,7 +22,7 @@
     </div>
     <br>
 
-    <div id="goToMovie" v-for="movie in sortMoviesByGenre" :key="movie.id">
+    <div id="" v-for="movie in sortMoviesByGenre" :key="movie.id">
       <router-link :to="{
               name:'Movie',
               params:{
@@ -32,7 +32,7 @@
                 displayAPIGenres: displayAPIGenres
               }
             }">
-        <img :src="'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/'+ movie.poster_path" alt="movie_picture" width="500em"><br>
+        <img :src="'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/'+ movie.poster_path" alt="movie_picture"/>
       </router-link>
       <!--      <ul v-for="genres in movie.genres" :key="genres.id">-->
       <!--        <li>{{ genres }}</li>-->
@@ -40,9 +40,18 @@
 <!--      <div v-for="genres in movie.genres" :key="genres.id">-->
 <!--        <ul v-if="displayAPIGenres(genres)">{{ displayAPIGenres(genres).name }}</ul>-->
 <!--      </div>-->
-      <br>
+    </div><br>
+<carousel name="carousel">
+  <carousel-slide name="carousel-slide">
+    Hello
+    <img src="http://chroniclesnews.com/wp-content/uploads/2021/03/movie-poster.png" alt="movie_picture"/>
 
-    </div>
+  </carousel-slide>
+  <carousel-slide name="carousel-slide">
+    Bye
+  </carousel-slide>
+</carousel>
+
 <!--    <button @click="getAPIGenres">Get API Genres</button>-->
     <div id="nbMovies">
       <h2>Number of movies: {{ films.length }}</h2>
@@ -53,11 +62,15 @@
 </template>
 
 <script>
-
 import axios from "axios";
+import Carousel from "./carousel/Carousel";
+import CarouselSlide from "./carousel/CarouselSlide";
 
 export default {
   name: "Home",
+  components: {
+    Carousel,
+    CarouselSlide},
   props: {
     movies: {
       type: Array,
